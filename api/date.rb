@@ -1,5 +1,13 @@
-Handler = Proc.new do |req, res|
-  res.status = 200
-  res['Content-Type'] = 'text/text; charset=utf-8'
-  res.body = "Current Time: #{Time.new}"
+class Handler < WEBrick::HTTPServlet::AbstractServlet
+  def do_GET request, response
+    status, content_type, body = do_stuff_with request
+
+    response.status = status
+    response['Content-Type'] = content_type
+    response.body = body
+  end
+
+  def do_stuff_with request
+    return 200, 'text/plain', "#{Time.now}"
+  end
 end
